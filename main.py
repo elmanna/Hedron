@@ -22,7 +22,7 @@ _errors_list = ["Connection aborted", "cannot go to"]
 
 
 #here you have to rename this dictionary according to your courses
-#mine where 
+#mine were 
 
 ##Ai
 ##web_tech
