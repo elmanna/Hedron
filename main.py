@@ -14,10 +14,12 @@ from time import sleep
 
 first_run = False
 
-#error list for different errors that can face u during connecting to
-#the course site, if the code found any error
-#in the secondary course file it will avoid it & will cancel 
-#the operation and continue to the next course checking
+"""
+error list for different errors that can face u during connecting to
+the course site, if the code find any error
+in the secondary course file it will avoid it & cancel 
+the operation and continue to the next course checking
+"""
 _errors_list = ["Connection aborted", "cannot go to"]
 
 
@@ -63,29 +65,29 @@ def __login__():
 
 
 def __touch__(name):
-	#making initializing empty main files according to the list above
+	#initializing empty main files according to the list above
 	os.system("call > %s"%(name))
 
 
 def __check__main_files__():
-	global first_run
-	if not os.path.isfile(courses_files_names["ai_main"]):
-			print("initializing main files!")
-			try:
-				os.system("md Main && md Secondary")
-			except:
-				pass
-			
-			first_run = True
-			sleep(2)
-			#initialize main files
-			__touch__(courses_files_names["ai_main"])
-			__touch__(courses_files_names["web_main"])
-			__touch__(courses_files_names["multimedia_main"])
-			__touch__(courses_files_names["javafx_main"])
-			__touch__(courses_files_names["softeng2_main"])
-			__touch__(courses_files_names["database_apps_main"])
-			__touch__(courses_files_names["mod_sim_main"])
+    global first_run
+     if not os.path.isfile(courses_files_names["ai_main"]):
+	print("initializing main files!")
+	try:
+		os.system("md Main && md Secondary")
+	except:
+		pass
+
+	first_run = True
+	sleep(2)
+	#initialize main files
+	__touch__(courses_files_names["ai_main"])
+	__touch__(courses_files_names["web_main"])
+	__touch__(courses_files_names["multimedia_main"])
+	__touch__(courses_files_names["javafx_main"])
+	__touch__(courses_files_names["softeng2_main"])
+	__touch__(courses_files_names["database_apps_main"])
+	__touch__(courses_files_names["mod_sim_main"])
 
 
 
@@ -93,8 +95,10 @@ __check__main_files__()
 
 
 def _sendMsg_(msg):
-    #here you can do what ever action you want in my case 
-    #i want to send a notification msg to a telegram group
+    """
+    here you can do what ever action you want in my case 
+    i want to send a notification msg to a telegram group
+    """
     pass
     """url = f"https://api.telegram.org/bot<yourTelegramBotToken>/sendMessage?chat_id=<chatIDyouwantToSendTheMsgTo>&text=%s" %msg
     requests.get(url)"""
@@ -125,39 +129,42 @@ def _CourseCheck_(m, s, m_path, s_path, main_name, coursename):
 
 	print("m: %s s: %s"%(m, s))
 
-	#if the secondary file size is less than the main & there is no errors in the
-	#secondary file then there is a new lecture or an new activity happend to the 
-	#course page
-	#then the script will rename the secondary file as the main & it will replace it 
-	#as the new main file, so its the latest update
+	"""
+	if the secondary file size is less than the main & there is no errors in the
+	secondary file then there is a new lecture or an new activity happend to the 
+	course page
+	then the script will rename the secondary file as the main & it will replace it 
+	as the new main file, so its the latest update
+	"""
+	
 	if ((s > m) and not _errors_(s_path)):
-				if not first_run:
-					sleep(2)
-					os.system("del %s"%(m_path))
-					print("renaming Secondary to Main...")
-					sleep(1)
-					os.system("ren %s %s "%(s_path, main_name))
-					print("Done renaming ...")
-					sleep(1)
-					print("moving to Main folder")
-					sleep(1)
-					os.system(r"move Secondary\%s %s"%(main_name, "Main/"))
-					sleep(3)
-					return True
-				else:
-					print("First Run Skip Alert Moving File to Main")
-					sleep(2)
-					os.system("del %s"%(m_path))
-					print("renaming Secondary to Main...")
-					sleep(1)
-					os.system("ren %s %s "%(s_path, main_name))
-					print("Done renaming ...")
-					sleep(1)
-					print("moving to Main folder")
-					sleep(1)
-					os.system(r"move Secondary\%s %s"%(main_name, "Main/"))
-					sleep(3)
-					return False	
+		if not first_run:
+			sleep(2)
+			os.system("del %s"%(m_path))
+			print("renaming Secondary to Main...")
+			sleep(1)
+			os.system("ren %s %s "%(s_path, main_name))
+			print("Done renaming ...")
+			sleep(1)
+			print("moving to Main folder")
+			sleep(1)
+			os.system(r"move Secondary\%s %s"%(main_name, "Main/"))
+			sleep(3)
+			return True
+		else:
+			print("First Run Skip Alert Moving File to Main")
+			sleep(2)
+			os.system("del %s"%(m_path))
+			print("renaming Secondary to Main...")
+			sleep(1)
+			os.system("ren %s %s "%(s_path, main_name))
+			print("Done renaming ...")
+			sleep(1)
+			print("moving to Main folder")
+			sleep(1)
+			os.system(r"move Secondary\%s %s"%(main_name, "Main/"))
+			sleep(3)
+			return False	
 				
 	else:
 		print ("||||>>>>nothing new in %s course<<<<||||"%(coursename))
@@ -175,7 +182,6 @@ def _main_():
 	_sendMsg_(">>>>>Started....")
 	while True:
 		try:
-
 			"""Ai"""
 			clear_window()
 			print("|||||>>> Checking Ai Course <<<|||||")
@@ -184,7 +190,7 @@ def _main_():
 
 			ai_m = os.stat(courses_files_names["ai_main"])
 			ai_s = os.stat(courses_files_names["ai_second"])
-			
+
 			#check if the courseCheck function returned true, (new update) so execute the blew actions
 			if _CourseCheck_(m=ai_m.st_size, s=ai_s.st_size, m_path=courses_files_names["ai_main"], s_path=courses_files_names["ai_second"], main_name="ai_main.txt", coursename="Ai"):
 					_sendMsg_(">>>>>>>Hedron_bot<<<<<<<")
@@ -211,11 +217,11 @@ def _main_():
 			web_s = os.stat(courses_files_names["web_second"])
 			
 			if _CourseCheck_(m=web_m.st_size, s=web_s.st_size, m_path=courses_files_names["web_main"], s_path=courses_files_names["web_second"], main_name="web_main.txt", coursename="Web Technologies & Services"):
-					_sendMsg_(">>>>>>>Hedron_bot<<<<<<<")
-					_sendMsg_("--->>>> New Web_Tech Lecture   تحديث او محاضرة جديدة لتقنيات وخدمات الويب")
-					_sendMsg_("Date: %s"%(datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
-					_sendMsg_(">>>>>>>>>Hedron_bot<<<<<<<<<")
-					#print("|#|+++++>>>>>> NEW Web Technologies lecture is uploaded!")
+				_sendMsg_(">>>>>>>Hedron_bot<<<<<<<")
+				_sendMsg_("--->>>> New Web_Tech Lecture   تحديث او محاضرة جديدة لتقنيات وخدمات الويب")
+				_sendMsg_("Date: %s"%(datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+				_sendMsg_(">>>>>>>>>Hedron_bot<<<<<<<<<")
+				#print("|#|+++++>>>>>> NEW Web Technologies lecture is uploaded!")
 			else:
 				pass
 				
