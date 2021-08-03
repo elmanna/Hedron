@@ -330,10 +330,12 @@ _sendMsg_(">>>>>>>Booting Hedron ")
 _sendMsg_(">>>>>>AlmnnaDev © 2021<<<<<<<")
 sleep(2)
 
-#here executing dead script which handle the application crash 
-#or when u stop it, it receives the process id of the hedron main
-#process so when it stopped it detect it and let you to do
-#specific action upon that event
+"""
+here executing dead script which handle the application crash 
+or if u stop it, it will receives the process id of the hedron main
+process so when it stops it detects it and let you do
+whatever action upon that event
+"""
 os.system("start python3 dead.py %s"%(os.getpid()))
 
 _main_()
